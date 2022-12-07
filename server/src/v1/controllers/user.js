@@ -46,7 +46,7 @@ exports.forgetPassword = async (req, res) => {
       from: process.env.EMAIL_USER,
       to: user.email,
       subject: 'Password reset',
-      text: `Your new password is ${password}. You can use this password to log in to your account.`
+      html: `Your new password is <b>${password}</b>. You can use this password to log in to your account.`
     };
     transport.sendMail(mailOptions, (err, info) => {
       if (err) {
