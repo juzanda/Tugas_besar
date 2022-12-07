@@ -43,7 +43,7 @@ router.post(
     'username must be at least 8 characters'
   ),
   validation.validate,
-  userController.login
+  userController.forgetPassword
 )
 
 router.post(

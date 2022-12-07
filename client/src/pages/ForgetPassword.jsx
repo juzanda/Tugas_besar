@@ -32,8 +32,9 @@ const ForgetPassword = () => {
       const res = await authApi.forgetPassword({
         username
       })
+      console.log("haiiii")
       setLoading(false)
-      localStorage.setItem('token', res.token)
+      //localStorage.setItem('token', res.token)
       navigate('/')
     } catch (err) {
       const errors = err.data.errors
