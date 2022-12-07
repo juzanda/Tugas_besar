@@ -11,6 +11,7 @@ import Kanban from '../components/common/Kanban'
 import { setBoards } from '../redux/features/boardSlice'
 import { setFavouriteList } from '../redux/features/favouriteSlice'
 
+
 let timer
 const timeout = 500
 

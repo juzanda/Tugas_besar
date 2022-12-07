@@ -1,8 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { Picker } from 'emoji-mart'
-
-import 'emoji-mart/css/emoji-mart.css'
+import Picker from 'emoji-picker-react'
 
 const EmojiPicker = props => {
   const [selectedEmoji, setSelectedEmoji] = useState()
@@ -13,6 +11,7 @@ const EmojiPicker = props => {
   }, [props.icon])
 
   const selectEmoji = (e) => {
+    console.log(e);
     const sym = e.unified.split('-')
     let codesArray = []
     sym.forEach(el => codesArray.push('0x' + el))
@@ -39,7 +38,7 @@ const EmojiPicker = props => {
         top: '100%',
         zIndex: '9999'
       }}>
-        <Picker theme='dark' onSelect={selectEmoji} showPreview={false} />
+        <Picker theme='dark' onEmojiClick={selectEmoji} showPreview={false} />
       </Box>
     </Box>
   )

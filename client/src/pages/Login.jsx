@@ -3,6 +3,11 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import LoadingButton from '@mui/lab/LoadingButton'
 import authApi from '../api/authApi'
+import { GoogleLogin } from '@react-oauth/google';
+
+
+
+
 
 const Login = () => {
   const navigate = useNavigate()
@@ -95,6 +100,15 @@ const Login = () => {
           Login
         </LoadingButton>
       </Box>
+      <GoogleLogin
+        onSuccess={credentialResponse => {
+          console.log(credentialResponse);
+          
+        }}
+        onError={() => {
+          console.log('Login Failed');
+        }}
+      />
       <Button
         component={Link}
         to='/signup'
