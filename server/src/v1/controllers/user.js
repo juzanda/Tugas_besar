@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const CryptoJS = require('crypto-js')
 const jsonwebtoken = require('jsonwebtoken')
+const nodemailer = require('nodemailer');
 
 exports.register = async (req, res) => {
   const { password } = req.body
@@ -25,7 +26,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { username, password } = req.body
   try {
-    const user = await User.findOne({ username }).select('password username')
+    const user = await User.findOne({$or:[ {username},{email: username}] }).select('password username')
     if (!user) {
       return res.status(401).json({
         errors: [

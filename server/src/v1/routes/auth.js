@@ -10,6 +10,9 @@ router.post(
   body('username').isLength({ min: 8 }).withMessage(
     'username must be at least 8 characters'
   ),
+  body('email').isLength({ min: 8 }).withMessage(
+    'email must be at least 8 characters'
+  ),
   body('password').isLength({ min: 8 }).withMessage(
     'password must be at least 8 characters'
   ),
@@ -23,8 +26,24 @@ router.post(
       }
     })
   }),
+  body('email').custom(value => {
+    return User.findOne({ email: value }).then(email => {
+      if (email) {
+        return Promise.reject('email already used')
+      }
+    })
+  }),
   validation.validate,
   userController.register
+)
+
+router.post(
+  '/forgetPassword',
+  body('username').isLength({ min: 8 }).withMessage(
+    'username must be at least 8 characters'
+  ),
+  validation.validate,
+  userController.login
 )
 
 router.post(

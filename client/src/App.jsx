@@ -11,6 +11,7 @@ import AuthLayout from './components/layout/AuthLayout'
 import Home from './pages/Home'
 import Board from './pages/Board'
 import Signup from './pages/Signup'
+import ForgetPassword from './pages/ForgetPassword'
 import Login from './pages/Login'
 
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/' element={<AuthLayout />}>
             <Route path='login' element={<Login />} />
             <Route path='signup' element={<Signup />} />
+            <Route path='forgetPassword' element={<ForgetPassword />} />
           </Route>
           <Route path='/' element={<AppLayout />}>
             <Route index element={<Home />} />

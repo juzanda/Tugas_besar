@@ -11,6 +11,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     select: false
+  },
+  email: {
+    type: String,
+    required: true,
+    select: false
   }
 }, schemaOptions)
 

@@ -3,26 +3,19 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import LoadingButton from '@mui/lab/LoadingButton'
 import authApi from '../api/authApi'
-import { GoogleLogin } from '@react-oauth/google';
 
-
-
-
-
-const Login = () => {
+const ForgetPassword = () => {
   const navigate = useNavigate()
+
   const [loading, setLoading] = useState(false)
   const [usernameErrText, setUsernameErrText] = useState('')
-  const [passwordErrText, setPasswordErrText] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setUsernameErrText('')
-    setPasswordErrText('')
 
     const data = new FormData(e.target)
     const username = data.get('username').trim()
-    const password = data.get('password').trim()
 
     let err = false
 
@@ -30,17 +23,15 @@ const Login = () => {
       err = true
       setUsernameErrText('Please fill this field')
     }
-    if (password === '') {
-      err = true
-      setPasswordErrText('Please fill this field')
-    }
 
     if (err) return
 
     setLoading(true)
 
     try {
-      const res = await authApi.login({ username, password })
+      const res = await authApi.forgetPassword({
+        username
+      })
       setLoading(false)
       localStorage.setItem('token', res.token)
       navigate('/')
@@ -50,9 +41,6 @@ const Login = () => {
         if (e.param === 'username') {
           setUsernameErrText(e.msg)
         }
-        if (e.param === 'password') {
-          setPasswordErrText(e.msg)
-        }
       })
       setLoading(false)
     }
@@ -60,6 +48,11 @@ const Login = () => {
 
   return (
     <>
+      <Box
+        sx={{ mt: 1 }}
+      >
+        Forget Password
+      </Box>
       <Box
         component='form'
         sx={{ mt: 1 }}
@@ -77,18 +70,6 @@ const Login = () => {
           error={usernameErrText !== ''}
           helperText={usernameErrText}
         />
-        <TextField
-          margin='normal'
-          required
-          fullWidth
-          id='password'
-          label='Password'
-          name='password'
-          type='password'
-          disabled={loading}
-          error={passwordErrText !== ''}
-          helperText={passwordErrText}
-        />
         <LoadingButton
           sx={{ mt: 3, mb: 2 }}
           variant='outlined'
@@ -97,34 +78,18 @@ const Login = () => {
           type='submit'
           loading={loading}
         >
-          Login
+          Submit
         </LoadingButton>
       </Box>
-      <GoogleLogin
-        onSuccess={credentialResponse => {
-          console.log(credentialResponse);
-          
-        }}
-        onError={() => {
-          console.log('Login Failed');
-        }}
-      />
       <Button
         component={Link}
-        to='/signup'
+        to='/login'
         sx={{ textTransform: 'none' }}
       >
-        Don't have an account? Signup
-      </Button>
-      <Button
-        component={Link}
-        to='/forgetPassword'
-        sx={{ textTransform: 'none' }}
-      >
-        Forgot Password
+        Already have an account? Login
       </Button>
     </>
   )
 }
 
-export default Login
+export default ForgetPassword

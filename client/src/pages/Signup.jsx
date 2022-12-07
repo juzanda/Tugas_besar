@@ -9,17 +9,20 @@ const Signup = () => {
 
   const [loading, setLoading] = useState(false)
   const [usernameErrText, setUsernameErrText] = useState('')
+  const [EmailErrText, setEmailErrText] = useState('')
   const [passwordErrText, setPasswordErrText] = useState('')
   const [confirmPasswordErrText, setConfirmPasswordErrText] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setUsernameErrText('')
+    setEmailErrText('')
     setPasswordErrText('')
     setConfirmPasswordErrText('')
 
     const data = new FormData(e.target)
     const username = data.get('username').trim()
+    const email = data.get('email').trim()
     const password = data.get('password').trim()
     const confirmPassword = data.get('confirmPassword').trim()
 
@@ -28,6 +31,10 @@ const Signup = () => {
     if (username === '') {
       err = true
       setUsernameErrText('Please fill this field')
+    }
+    if (email === '') {
+      err = true
+      setEmailErrText('Please fill this field')
     }
     if (password === '') {
       err = true
@@ -48,7 +55,7 @@ const Signup = () => {
 
     try {
       const res = await authApi.signup({
-        username, password, confirmPassword
+        username, password, confirmPassword,email
       })
       setLoading(false)
       localStorage.setItem('token', res.token)
@@ -58,6 +65,9 @@ const Signup = () => {
       errors.forEach(e => {
         if (e.param === 'username') {
           setUsernameErrText(e.msg)
+        }
+        if (e.param === 'email') {
+          setEmailErrText(e.msg)
         }
         if (e.param === 'password') {
           setPasswordErrText(e.msg)
@@ -88,6 +98,18 @@ const Signup = () => {
           disabled={loading}
           error={usernameErrText !== ''}
           helperText={usernameErrText}
+        />
+        <TextField
+          margin='normal'
+          required
+          fullWidth
+          id='email'
+          label='Email'
+          name='email'
+          type='email'
+          disabled={loading}
+          error={EmailErrText !== ''}
+          helperText={EmailErrText}
         />
         <TextField
           margin='normal'
