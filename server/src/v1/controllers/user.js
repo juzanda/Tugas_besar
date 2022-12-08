@@ -166,3 +166,21 @@ exports.getOne = async (req, res) => {
     res.status(500).json(err)
   }
 }
+
+exports.updatePassword = async (req, res) => {
+  const { username1,password1 } = req.body
+  console.log(password1) 
+  try {
+    const PasswordHash = CryptoJS.AES.encrypt(
+      password1,
+      process.env.PASSWORD_SECRET_KEY
+    )
+    console.log(PasswordHash.toString()) 
+    const user = await User.findOneAndUpdate({username:username1},{password:PasswordHash.toString()}).select('email')
+    //send email reset
+    res.status(200).json(user)
+  } catch (err) {
+    res.status(500).json(err)
+    console.log(err)
+  }
+}

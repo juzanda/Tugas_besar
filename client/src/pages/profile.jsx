@@ -2,7 +2,6 @@ import { Box, Typography, TextField } from '@mui/material'
 import { useEffect,useState } from 'react'
 // import { useSelector } from 'react-redux'
 // import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch} from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import LoadingButton from '@mui/lab/LoadingButton'
 import authApi from '../api/authApi'
@@ -10,13 +9,14 @@ import Avatar from '@mui/material/Avatar'
 import blueGrey from '@mui/material/colors/blueGrey'
 
 const Profile = () => {
-  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const { userId } = useParams()
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordErrText, setPasswordErrText] = useState('')
   console.log(userId);
 
   useEffect(() => {
@@ -32,6 +32,41 @@ const Profile = () => {
     }
     getProfile()
   }, [userId])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setPasswordErrText('')
+
+    const data = new FormData(e.target)
+    const username1 = username
+    const password1 = password
+
+    let err = false
+
+    if (password === '') {
+      err = true
+      setPasswordErrText('Please fill this field')
+    }
+
+    if (err) return
+
+    setLoading(true)
+
+    try {
+      const res = await authApi.updatePassword({ username1, password1 })
+      setLoading(false)
+      //localStorage.setItem('token', res.token)
+      navigate('/')
+    } catch (err) {
+      const errors = err.data.errors
+      errors.forEach(e => {
+        if (e.param === 'password') {
+          setPasswordErrText(e.msg)
+        }
+      })
+      setLoading(false)
+    }
+  }
   return (
     <>
 
@@ -46,6 +81,7 @@ const Profile = () => {
         component='form'
         sx={{ mt: 1 }}
         noValidate
+        onSubmit={handleSubmit}
       >
         <Typography variant='body2' fontWeight='700'>
           USERNAME
@@ -75,7 +111,7 @@ const Profile = () => {
           name='email'
           type='email'
           value={email}
-          disabled='true'
+          disabled={loading}
         />
         <Typography variant='body2' fontWeight='700'>
 
@@ -84,6 +120,7 @@ const Profile = () => {
           PASSWORD
         </Typography>
         <TextField
+          onChange={(newValue) => setPassword(newValue.target.value)}
           margin='normal'
           required
           fullWidth
@@ -91,6 +128,7 @@ const Profile = () => {
           label='Password'
           name='password'
           value={password}
+          error={passwordErrText !== ''}
           type={showPassword ? "text" : "password"}
         />
         <LoadingButton onClick={() => setShowPassword(s => !s)}>Show Password</LoadingButton>
@@ -100,9 +138,19 @@ const Profile = () => {
           fullWidth
           color='success'
           type='submit'
-          // loading={loading}
+          loading={loading}
         >
           CHANGE PASSWORD
+        </LoadingButton>
+        <LoadingButton
+          sx={{ mt: 3, mb: 2 }}
+          variant='outlined'
+          fullWidth
+          color='error'
+          loading={loading}
+          onClick={() =>  navigate('/')}
+        >
+          CANCEL
         </LoadingButton>
       
       </Box>

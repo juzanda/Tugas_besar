@@ -84,4 +84,11 @@ router.get(
   userController.getOne
 )
 
+router.post(
+  '/updatePassword',
+  validation.validate,
+  tokenHandler.verifyToken,
+  userController.updatePassword
+)
+
 module.exports = router
