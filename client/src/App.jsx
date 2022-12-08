@@ -12,7 +12,7 @@ import Home from './pages/Home'
 import Board from './pages/Board'
 import Signup from './pages/Signup'
 import ForgetPassword from './pages/ForgetPassword'
-import Profile from './pages/profile'
+import Profile from './pages/Profile'
 import Login from './pages/Login'
 
 
@@ -36,7 +36,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path='/boards' element={<Home />} />
             <Route path='/boards/:boardId' element={<Board />} />
-            <Route path='/profile' element={<Profile />} />
+            <Route path='/profile/:userId' element={<Profile />} />
           </Route>
         </Routes>
       </BrowserRouter>

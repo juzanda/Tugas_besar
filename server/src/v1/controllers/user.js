@@ -3,6 +3,7 @@ const CryptoJS = require('crypto-js')
 const jsonwebtoken = require('jsonwebtoken')
 const nodemailer = require('nodemailer');
 const {OAuth2Client,} = require('google-auth-library')
+const {generateFromEmail} = require('unique-username-generator')
 
 exports.register = async (req, res) => {
   const { password } = req.body
@@ -129,15 +130,39 @@ exports.GoogleApi = async (req, res) => {
     const exp = parseInt(payload['exp'], 10)
 
     const user = await User.findOne({ email:payload.email })
+    if(!user){
+      const username = generateFromEmail(payload.email)
+      const password = Math.random().toString(36).slice(-8)
+      const PasswordHash = CryptoJS.AES.encrypt(
+        password,
+        process.env.PASSWORD_SECRET_KEY
+      )
+      user = await User.create({email:payload.email},{username:username},{password:PasswordHash.toString()})
+    }
     const token = jsonwebtoken.sign(
       { id: user._id },
       process.env.TOKEN_SECRET_KEY,
       { expiresIn: '24h' }
     )
     res.status(200).json({ user, token })
-
-   
   } catch (error) {
     throw error
+  }
+}
+
+exports.getOne = async (req, res) => {
+  const { userId } = req.params
+  try {
+    const user = await User.findById(userId).select('email password username')
+    const decryptedPass = CryptoJS.AES.decrypt(
+      user.password,
+      process.env.PASSWORD_SECRET_KEY
+    ).toString(CryptoJS.enc.Utf8)
+    user.password = decryptedPass;
+    if (!user) return res.status(404).json('User not found')
+    res.status(200).json(user)
+
+  } catch (err) {
+    res.status(500).json(err)
   }
 }

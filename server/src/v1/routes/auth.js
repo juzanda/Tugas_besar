@@ -1,9 +1,10 @@
 const router = require('express').Router()
 const userController = require('../controllers/user')
-const { body } = require('express-validator')
+const { body,param } = require('express-validator')
 const validation = require('../handlers/validation')
 const tokenHandler = require('../handlers/tokenHandler')
 const User = require('../models/user')
+
 
 router.post(
   '/signup',
@@ -69,6 +70,18 @@ router.post(
 router.post(
   '/google-api',
    userController.GoogleApi
+)
+
+router.get(
+  '/:userId',
+  param('userId').custom(value => {
+    if (!validation.isObjectId(value)) {
+      return Promise.reject('invalid id')
+    } else return Promise.resolve()
+  }),
+  validation.validate,
+  tokenHandler.verifyToken,
+  userController.getOne
 )
 
 module.exports = router

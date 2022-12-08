@@ -47,7 +47,7 @@ const Sidebar = () => {
 
   const userprofile = () => {
     // localStorage.removeItem('token')
-    navigate('/profile')
+    navigate(`/profile/${user._id}`)
   }
 
   const onDragEnd = async ({ source, destination }) => {

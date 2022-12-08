@@ -6,6 +6,7 @@ const authApi = {
   forgetPassword :  params => axiosClient.post('auth/forgetPassword', params),
   verifyToken: () => axiosClient.post('auth/verify-token'),
   GoogleApi :  params => axiosClient.post('auth/google-api', params),
+  getOne: (id) => axiosClient.get(`auth/${id}`)
 }
 
 export default authApi
