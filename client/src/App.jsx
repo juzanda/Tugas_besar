@@ -12,6 +12,7 @@ import Home from './pages/Home'
 import Board from './pages/Board'
 import Signup from './pages/Signup'
 import ForgetPassword from './pages/ForgetPassword'
+import Profile from './pages/profile'
 import Login from './pages/Login'
 
 
@@ -33,6 +34,7 @@ function App() {
           </Route>
           <Route path='/' element={<AppLayout />}>
             <Route index element={<Home />} />
+            <Route path='profile' element={<Profile />} />
             <Route path='boards' element={<Home />} />
             <Route path='boards/:boardId' element={<Board />} />
           </Route>

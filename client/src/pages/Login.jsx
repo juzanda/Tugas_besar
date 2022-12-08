@@ -3,7 +3,9 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import LoadingButton from '@mui/lab/LoadingButton'
 import authApi from '../api/authApi'
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google'
+
+
 
 
 
@@ -101,14 +103,19 @@ const Login = () => {
         </LoadingButton>
       </Box>
       <GoogleLogin
-        onSuccess={credentialResponse => {
-          console.log(credentialResponse);
-          
+          onSuccess={ async credentialResponse => {
+            const {credential, clientID} = credentialResponse
+            const res = await authApi.GoogleApi({credential,clientID});
+            setLoading(false)
+
+            localStorage.setItem('token', res.token)
+            navigate('/')
+          // var decoded = jwt_decode(credentialResponse.credential);
+          // console.log(decoded)
         }}
         onError={() => {
           console.log('Login Failed');
-        }}
-      />
+        }} />
       <Button
         component={Link}
         to='/signup'

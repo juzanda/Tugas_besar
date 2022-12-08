@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { Box, Drawer, IconButton, List, ListItem, ListItemButton, Typography } from '@mui/material'
+import { Box, Drawer, IconButton, List, ListItem, ListItemButton, Typography,Button } from '@mui/material'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined'
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -43,6 +43,11 @@ const Sidebar = () => {
   const logout = () => {
     localStorage.removeItem('token')
     navigate('/login')
+  }
+
+  const userprofile = () => {
+    // localStorage.removeItem('token')
+    navigate('/profile')
   }
 
   const onDragEnd = async ({ source, destination }) => {
@@ -98,9 +103,15 @@ const Sidebar = () => {
             alignItems: 'center',
             justifyContent: 'space-between'
           }}>
-            <Typography variant='body2' fontWeight='700'>
+            <Button 
+              onClick={userprofile}
+              sx={{ textTransform: 'none' }}
+            >
+               {user.username}
+            </Button>
+            {/* <Typography variant='body2' fontWeight='700'>
               {user.username}
-            </Typography>
+            </Typography> */}
             <IconButton onClick={logout}>
               <LogoutOutlinedIcon fontSize='small' />
             </IconButton>

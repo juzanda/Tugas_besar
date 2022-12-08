@@ -4,7 +4,8 @@ const authApi = {
   signup: params => axiosClient.post('auth/signup', params),
   login: params => axiosClient.post('auth/login', params),
   forgetPassword :  params => axiosClient.post('auth/forgetPassword', params),
-  verifyToken: () => axiosClient.post('auth/verify-token')
+  verifyToken: () => axiosClient.post('auth/verify-token'),
+  GoogleApi :  params => axiosClient.post('auth/google-api', params),
 }
 
 export default authApi

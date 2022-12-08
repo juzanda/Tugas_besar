@@ -2,6 +2,7 @@ const User = require('../models/user')
 const CryptoJS = require('crypto-js')
 const jsonwebtoken = require('jsonwebtoken')
 const nodemailer = require('nodemailer');
+const {OAuth2Client,} = require('google-auth-library')
 
 exports.register = async (req, res) => {
   const { password } = req.body
@@ -106,5 +107,37 @@ exports.login = async (req, res) => {
 
   } catch (err) {
     res.status(500).json(err)
+  }
+}
+
+exports.GoogleApi = async (req, res) => {
+  try {
+    const { credential, clientId } = req.body
+    const oAuth2Client = new OAuth2Client(
+      process.env.CLIENT_ID_G,
+      process.env.CLIENT_SECRET_G,
+      'postmessage',
+
+    );
+
+    const ticket = await oAuth2Client.verifyIdToken({
+      idToken: credential,
+      audience: clientId,
+    })
+    console.log(ticket);
+    const payload = ticket.getPayload()
+    const exp = parseInt(payload['exp'], 10)
+
+    const user = await User.findOne({ email:payload.email })
+    const token = jsonwebtoken.sign(
+      { id: user._id },
+      process.env.TOKEN_SECRET_KEY,
+      { expiresIn: '24h' }
+    )
+    res.status(200).json({ user, token })
+
+   
+  } catch (error) {
+    throw error
   }
 }

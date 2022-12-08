@@ -66,4 +66,9 @@ router.post(
   }
 )
 
+router.post(
+  '/google-api',
+   userController.GoogleApi
+)
+
 module.exports = router
