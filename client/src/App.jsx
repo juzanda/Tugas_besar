@@ -34,9 +34,9 @@ function App() {
           </Route>
           <Route path='/' element={<AppLayout />}>
             <Route index element={<Home />} />
-            <Route path='profile' element={<Profile />} />
-            <Route path='boards' element={<Home />} />
-            <Route path='boards/:boardId' element={<Board />} />
+            <Route path='/boards' element={<Home />} />
+            <Route path='/boards/:boardId' element={<Board />} />
+            <Route path='/profile' element={<Profile />} />
           </Route>
         </Routes>
       </BrowserRouter>

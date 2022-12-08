@@ -34,11 +34,11 @@ const Sidebar = () => {
 
   useEffect(() => {
     const activeItem = boards.findIndex(e => e.id === boardId)
-    if (boards.length > 0 && boardId === undefined) {
-      navigate(`/boards/${boards[0].id}`)
-    }
+    // if (boards.length > 0 && boardId === undefined) {
+    //   navigate(`/boards/${boards[0].id}`)
+    // }
     setActiveIndex(activeItem)
-  }, [boards, boardId, navigate])
+  }, [boards, boardId])
 
   const logout = () => {
     localStorage.removeItem('token')

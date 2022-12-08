@@ -1,93 +1,31 @@
-import { Box, Button, TextField } from '@mui/material'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Box, Typography, TextField } from '@mui/material'
+// import { useState } from 'react'
+// import { useSelector } from 'react-redux'
+// import { Link, useNavigate } from 'react-router-dom'
 import LoadingButton from '@mui/lab/LoadingButton'
-import authApi from '../api/authApi'
+// import authApi from '../api/authApi'
+import Avatar from '@mui/material/Avatar'
+import blueGrey from '@mui/material/colors/blueGrey'
 
 const profile = () => {
-//   const navigate = useNavigate()
-
-//   const [loading, setLoading] = useState(false)
-//   const [usernameErrText, setUsernameErrText] = useState('')
-//   const [EmailErrText, setEmailErrText] = useState('')
-//   const [passwordErrText, setPasswordErrText] = useState('')
-//   const [confirmPasswordErrText, setConfirmPasswordErrText] = useState('')
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault()
-//     setUsernameErrText('')
-//     setEmailErrText('')
-//     setPasswordErrText('')
-//     setConfirmPasswordErrText('')
-
-//     const data = new FormData(e.target)
-//     const username = data.get('username').trim()
-//     const email = data.get('email').trim()
-//     const password = data.get('password').trim()
-//     const confirmPassword = data.get('confirmPassword').trim()
-
-//     let err = false
-
-//     if (username === '') {
-//       err = true
-//       setUsernameErrText('Please fill this field')
-//     }
-//     if (email === '') {
-//       err = true
-//       setEmailErrText('Please fill this field')
-//     }
-//     if (password === '') {
-//       err = true
-//       setPasswordErrText('Please fill this field')
-//     }
-//     if (confirmPassword === '') {
-//       err = true
-//       setConfirmPasswordErrText('Please fill this field')
-//     }
-//     if (password !== confirmPassword) {
-//       err = true
-//       setConfirmPasswordErrText('Confirm password not match')
-//     }
-
-//     if (err) return
-
-//     setLoading(true)
-
-//     try {
-//       const res = await authApi.signup({
-//         username, password, confirmPassword,email
-//       })
-//       setLoading(false)
-//       localStorage.setItem('token', res.token)
-//       navigate('/')
-//     } catch (err) {
-//       const errors = err.data.errors
-//       errors.forEach(e => {
-//         if (e.param === 'username') {
-//           setUsernameErrText(e.msg)
-//         }
-//         if (e.param === 'email') {
-//           setEmailErrText(e.msg)
-//         }
-//         if (e.param === 'password') {
-//           setPasswordErrText(e.msg)
-//         }
-//         if (e.param === 'confirmPassword') {
-//           setConfirmPasswordErrText(e.msg)
-//         }
-//       })
-//       setLoading(false)
-//     }
-//   }
-
-   return (
+  return (
     <>
+
+      <Avatar sx={{ bgcolor: blueGrey[500] }} variant="square">
+        P
+      </Avatar>
+      <Typography variant='body2' fontWeight='700'>
+
+      </Typography>
       <Box
+
         component='form'
         sx={{ mt: 1 }}
-        // onSubmit={handleSubmit}
         noValidate
       >
+        <Typography variant='body2' fontWeight='700'>
+          USERNAME
+        </Typography>
         <TextField
           margin='normal'
           required
@@ -95,10 +33,14 @@ const profile = () => {
           id='username'
           label='Username'
           name='username'
-          // disabled={loading}
-          // error={usernameErrText !== ''}
-          // helperText={usernameErrText}
+          disabled='true'
         />
+        <Typography variant='body2' fontWeight='700'>
+
+        </Typography>
+        <Typography variant='body2' fontWeight='700'>
+          EMAIL
+        </Typography>
         <TextField
           margin='normal'
           required
@@ -107,10 +49,14 @@ const profile = () => {
           label='Email'
           name='email'
           type='email'
-          // disabled={loading}
-          // error={EmailErrText !== ''}
-          // helperText={EmailErrText}
+          disabled='true'
         />
+        <Typography variant='body2' fontWeight='700'>
+
+        </Typography>
+        <Typography variant='body2' fontWeight='700'>
+          PASSWORD
+        </Typography>
         <TextField
           margin='normal'
           required
@@ -119,21 +65,6 @@ const profile = () => {
           label='Password'
           name='password'
           type='password'
-          // disabled={loading}
-          // error={passwordErrText !== ''}
-          // helperText={passwordErrText}
-        />
-        <TextField
-          margin='normal'
-          required
-          fullWidth
-          id='confirmPassword'
-          label='Confirm Password'
-          name='confirmPassword'
-          type='password'
-          // disabled={loading}
-          // error={confirmPasswordErrText !== ''}
-          // helperText={confirmPasswordErrText}
         />
         <LoadingButton
           sx={{ mt: 3, mb: 2 }}
@@ -143,18 +74,13 @@ const profile = () => {
           type='submit'
           // loading={loading}
         >
-          Signup
+          CHANGE PASSWORD
         </LoadingButton>
+      
       </Box>
-      <Button
-        component={Link}
-        to='/login'
-        sx={{ textTransform: 'none' }}
-      >
-        Already have an account? Login
-      </Button>
+
     </>
   )
- }
+}
 
 export default profile
