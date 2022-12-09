@@ -12,7 +12,7 @@ import Home from './pages/Home'
 import Board from './pages/Board'
 import Signup from './pages/Signup'
 import ForgetPassword from './pages/ForgetPassword'
-import Profile from './pages/Profile'
+import Profile from './pages/profile'
 import Login from './pages/Login'
 
 

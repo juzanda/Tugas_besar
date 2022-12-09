@@ -27,12 +27,12 @@ const AuthLayout = () => {
     ) : (
       <Container component='main' maxWidth='xs'>
         <Box sx={{
-          marginTop: 8,
+          marginTop: 5,
           display: 'flex',
           alignItems: 'center',
           flexDirection: 'column'
         }}>
-          <img src={assets.images.logoDark} style={{ width: '100px' }} alt='app logo' />
+          <img src={assets.images.logoDark} style={{ width: '200px' }} alt='app logo' />
           <Outlet />
         </Box>
       </Container>

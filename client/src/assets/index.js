@@ -1,6 +1,6 @@
 const assets = {
   images: {
-    logoDark: require('./images/logo-dark.png'),
+    logoDark: require('./images/bjb.png'),
     appIcon: require('./images/favicon.png')
   },
   colors: {

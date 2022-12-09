@@ -42,6 +42,16 @@ exports.forgetPassword = async (req, res) => {
     )
     console.log(PasswordHash.toString()) 
     const user = await User.findOneAndUpdate({$or:[ {username},{email: username}] },{password:PasswordHash.toString()}).select('email')
+    if(!user){
+      return res.status(401).json({
+        errors: [
+          {
+            param: 'username',
+            msg: 'Invalid username or email'
+          }
+        ]
+      })
+    }
     //send email reset
     console.log(user)
     const mailOptions = {
