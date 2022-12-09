@@ -129,15 +129,16 @@ exports.GoogleApi = async (req, res) => {
     const payload = ticket.getPayload()
     const exp = parseInt(payload['exp'], 10)
 
-    const user = await User.findOne({ email:payload.email })
+    let user = await User.findOne({ email:payload.email })
     if(!user){
-      const username = generateFromEmail(payload.email)
+      const username = generateFromEmail(payload.email,3)
+      console.log(username)
       const password = Math.random().toString(36).slice(-8)
       const PasswordHash = CryptoJS.AES.encrypt(
         password,
         process.env.PASSWORD_SECRET_KEY
       )
-      user = await User.create({email:payload.email},{username:username},{password:PasswordHash.toString()})
+      user = await User.create({email:payload.email,username:username,password:PasswordHash.toString()})
     }
     const token = jsonwebtoken.sign(
       { id: user._id },
